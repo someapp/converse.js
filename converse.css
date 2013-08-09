@@ -11,8 +11,11 @@
 }
 
 .locked {
-    background: url(images/emblem-readonly.png) no-repeat right;
+	background: url(images/sprites.png) no-repeat;
+	background-position: -320px -128px;
     padding-right: 22px;
+	width: 32px;
+	height: 32px;
 }
 
 span.spinner {
@@ -837,7 +840,9 @@ form.add-xmpp-contact input {
 }
 
 .chatbox .dropdown a.toggle-xmpp-contact-form {
-    background: url('images/add_icon.png') no-repeat 4px 2px;
+	background: url(images/sprites.png) no-repeat;
+	background-position: -320px -128px;
+    padding-right: 22px;
 }
 
 .chatbox .dropdown a.online {
