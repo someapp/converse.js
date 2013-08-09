@@ -6,6 +6,8 @@
  * Dual licensed under the MIT and GPL Licenses
  */
 
+@import url("images/sprites.css");
+
 .hidden {
     display: none
 }
@@ -301,20 +303,34 @@ dl.add-converse-contact {
     height: 22px;
 }
 
+.fancy-dropdown span {
+    padding-top: 3px;
+}
+
 .fancy-dropdown a.choose-xmpp-status,
 .fancy-dropdown a.toggle-xmpp-contact-form {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-    padding-left: 2em;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     float: left;
-    width: 130px;
+}
+
+.xmpp-status {
+    padding-left: 5px;
+}
+
+.xmpp-status span {
+    float: left;
+    margin: 1px 7px 0 0;
+}
+
+#fancy-xmpp-status-select {
+    padding: 2px 0 0 0;
 }
 
 #fancy-xmpp-status-select a.change-xmpp-status-message {
-    background: url('images/pencil_icon.png') no-repeat right 3px;
     float: right;
     clear: right;
     height: 22px;
@@ -809,8 +825,6 @@ form.add-xmpp-contact input {
 
 .chatbox .dropdown dt a span {
     cursor:pointer; 
-    display:block; 
-    padding: 5px;
 }
 
 .chatbox .dropdown dd ul {
@@ -834,19 +848,18 @@ form.add-xmpp-contact input {
 }
 
 .chatbox .dropdown a {
-    padding: 3px 0 0 25px;
     display: block;
     height: 22px;
 }
 
-.chatbox .dropdown a.toggle-xmpp-contact-form {
-	background: url(images/sprites.png) no-repeat;
-	background-position: -320px -128px;
-    padding-right: 22px;
+.chatbox a.toggle-xmpp-contact-form {
+    padding: 2px 0 0 5px;
+    width: 100%;
 }
 
-.chatbox .dropdown a.online {
-    background: url(images/user_online_panel.png) no-repeat 3px 4px;
+.chatbox a.toggle-xmpp-contact-form span {
+    margin: 1px 7px 0 0;
+    float: left;
 }
 
 .chatbox .dropdown a.offline {

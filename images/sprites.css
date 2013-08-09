@@ -1,4 +1,4 @@
-.icon-offline,.icon-busy,.icon-home,.icon-home2,.icon-home3,.icon-pencil,.icon-image,.icon-image2,.icon-images,.icon-camera,.icon-music,.icon-headphones,.icon-play,.icon-film,.icon-camera2,.icon-phone,.icon-phone-hang-up,.icon-address-book,.icon-notebook,.icon-envelop,.icon-pushpin,.icon-bubble,.icon-bubbles,.icon-bubble2,.icon-bubbles2,.icon-bubbles3,.icon-user,.icon-users,.icon-quotes-left,.icon-spinner,.icon-spinner2,.icon-spinner3,.icon-search,.icon-zoom-in,.icon-zoom-out,.icon-key,.icon-key2,.icon-lock,.icon-lock2,.icon-unlocked,.icon-wrench,.icon-cog,.icon-cogs,.icon-cog2,.icon-remove,.icon-remove2,.icon-globe,.icon-attachment,.icon-eye,.icon-eye-blocked,.icon-eye2,.icon-heart,.icon-thumbs-up,.icon-happy,.icon-smiley,.icon-tongue,.icon-sad,.icon-wink,.icon-grin,.icon-cool,.icon-angry,.icon-evil,.icon-shocked,.icon-confused,.icon-wondering,.icon-warning,.icon-notification,.icon-info,.icon-info2,.icon-blocked,.icon-cancel-circle,.icon-close,.icon-spell-check,.icon-minus,.icon-plus,.icon-volume-high,.icon-volume-medium,.icon-volume-low,.icon-volume-mute,.icon-volume-mute2,.icon-volume-increase,.icon-volume-decrease,.icon-checkbox-checked,.icon-checkbox-unchecked,.icon-checkbox-partial,.icon-radio-checked,.icon-radio-unchecked,.icon-bold,.icon-underline,.icon-italic,.icon-strikethrough,.icon-new-tab,.icon-embed,.icon-code,.icon-youtube {
+.icon-offline,.icon-busy,.icon-home,.icon-home2,.icon-home3,.icon-pencil,.icon-image,.icon-image2,.icon-images,.icon-camera,.icon-music,.icon-headphones,.icon-play,.icon-film,.icon-camera2,.icon-phone,.icon-phone-hang-up,.icon-address-book,.icon-notebook,.icon-envelop,.icon-pushpin,.icon-online,.icon-bubbles,.icon-bubble2,.icon-bubbles2,.icon-bubbles3,.icon-user,.icon-users,.icon-quotes-left,.icon-spinner,.icon-spinner2,.icon-spinner3,.icon-search,.icon-zoom-in,.icon-zoom-out,.icon-key,.icon-key2,.icon-lock,.icon-lock2,.icon-unlocked,.icon-wrench,.icon-cog,.icon-cogs,.icon-cog2,.icon-remove,.icon-remove2,.icon-globe,.icon-attachment,.icon-eye,.icon-eye-blocked,.icon-eye2,.icon-heart,.icon-thumbs-up,.icon-happy,.icon-smiley,.icon-tongue,.icon-sad,.icon-wink,.icon-grin,.icon-cool,.icon-angry,.icon-evil,.icon-shocked,.icon-confused,.icon-wondering,.icon-warning,.icon-notification,.icon-info,.icon-info2,.icon-blocked,.icon-cancel-circle,.icon-close,.icon-spell-check,.icon-minus,.icon-plus,.icon-volume-high,.icon-volume-medium,.icon-volume-low,.icon-volume-mute,.icon-volume-mute2,.icon-volume-increase,.icon-volume-decrease,.icon-checkbox-checked,.icon-checkbox-unchecked,.icon-checkbox-partial,.icon-radio-checked,.icon-radio-unchecked,.icon-bold,.icon-underline,.icon-italic,.icon-strikethrough,.icon-new-tab,.icon-embed,.icon-code,.icon-youtube {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
@@ -68,7 +68,7 @@
 .icon-pushpin {
 	background-position: -128px -32px;
 }
-.icon-bubble {
+.icon-online {
 	background-position: -160px -32px;
 }
 .icon-bubbles {
