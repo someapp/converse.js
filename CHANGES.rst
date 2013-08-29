@@ -1,7 +1,15 @@
 Changelog
 =========
 
-0.6.0 (Unreleased)
+0.6.1 (2013-08-28)
+------------------
+
+- IE9 and IE8 CSS fixes. [jcbrand]
+- Bugfix: Pencil icon not visible (for setting status update). [jcbrand]
+- Bugfix: RID, JID and SID initialization values were being ignored. [jcbrand]
+- Bugfix: Fall back to English if a non-existing locale was specified. [jcbrand]
+
+0.6.0 (2013-08-26)
 ------------------
 
 - #39 Documentation for minifying JS is wrong. [jcbrand]
@@ -13,6 +21,8 @@ Changelog
 - Add a debug option (logs to the browser console). [jcbrand]
 - Use font icons from http://icomoon.io [jcbrand]
 - Added a static mockup to aid CSS/design process. [jcbrand]
+- Save language codes with hyphens. Thanks to @seocam. [jcbrand]
+- The combined and minified JS file now uses almond and not require.js. [jcbrand]
 
 0.5.2 (2013-08-05)
 ------------------
