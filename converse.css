@@ -171,7 +171,10 @@ ul.participant-list li.moderator {
 }
 
 .chat-info {
-    color:#666666;
+    color: #666666;
+}
+.chat-error {
+    color: #8f2831;
 }
 
 .chat-message-room,
@@ -216,7 +219,6 @@ li.chat-info {
     padding-top: 10px;
 }
 
-div#settings,
 div#chatrooms,
 div#login-dialog {
     height: 274px;
@@ -332,7 +334,7 @@ dl.add-converse-contact {
     float: right;
     clear: right;
     height: 22px;
-    padding: 5px 5px 0 0;
+    padding: 0px 5px 0 0;
     color: rgb(79, 79, 79);
 }
 
@@ -567,6 +569,7 @@ dd.available-chatroom:hover a.room-info {
 }
 
 #converse-roster a.open-chat {
+    line-height: 21px;
     width: 85%;
 }
 #converse-roster  dd:hover a.open-chat {
@@ -608,7 +611,7 @@ dd.available-chatroom:hover a.room-info {
     background-color: #DCEAC5;
 }
 
-div#controlbox-panes {
+.controlbox-panes {
     background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(240,240,240,1) 100%); /* FF3.6+ */
     background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(240,240,240,1) 100%); /* IE10+ */
     background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(240,240,240,1) 100%); /* Opera 11.10+ */
@@ -772,6 +775,10 @@ ul.chat-toolbar {
     height: 20px;
     display: block;
     width: 195px;
+    /* XXX:  CHECKME */
+    float: right;
+    display: inline-block;
+    height: 20px;
 }
 
 .chat-toolbar .toggle-otr {
@@ -782,10 +789,11 @@ ul.chat-toolbar {
 	display: none;
     font-size:12px;
     position: absolute;
-    top: 20px;
+    bottom: 100%;
+    margin-bottom: 0;
     right: 0;
     background: #fff;
-    box-shadow: 1px 3px 3px 1px rgba(0,0,0,0.4);
+    box-shadow: -1px -2px 2px 1px rgba(0,0,0,0.4);
 }
 
 .chat-toolbar .toggle-otr ul li {
@@ -814,22 +822,14 @@ ul.chat-toolbar {
     padding-right: 3px;
 }
 
-.not-private a,
-.not-private {
+.unencrypted a,
+.unencrypted {
     color: #8f2831;
 }
 
 .unverified a,
 .unverified {
     color: #cf5300;
-}
-
-.private a,
-.private {
-    color: #4B7003
-    float: right;
-    display: inline-block;
-    height: 20px;
 }
 
 ul.chat-toolbar li {
@@ -892,7 +892,7 @@ form.add-xmpp-contact input {
 .chatbox .dropdown dt a span {
     cursor:pointer; 
     display:block; 
-    padding: 2px 7px 0 5px;
+    padding: 4px 7px 0 5px;
     color: rgb(79, 79, 79);
 }
 
@@ -919,7 +919,7 @@ form.add-xmpp-contact input {
 .chatbox .dropdown a {
     height: 22px;
     display: inline-block;
-    padding-top: 2px;
+    line-height: 24px;
 }
 
 .chatbox .dropdown dd ul a:hover {
