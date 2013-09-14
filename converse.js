@@ -307,7 +307,7 @@
                     }
                     this.messages = new converse.Messages();
                     this.messages.localStorage = new Backbone.LocalStorage(
-                        hex_sha1('converse.messages'+this.get('jid')));
+                        hex_sha1('converse.messages'+this.get('jid')+converse.bare_jid));
                     this.set({
                         'user_id' : Strophe.getNodeFromJid(this.get('jid')),
                         'box_id' : hex_sha1(this.get('jid')),
@@ -749,7 +749,7 @@
                 if (match) {
                     if (match[1] === "clear") {
                         this.$el.find('.chat-content').empty();
-                        this.model.messages.reset();
+                        this.model.messages.reset().localStorage._clear();
                         return;
                     }
                     else if (match[1] === "help") {
@@ -2260,10 +2260,12 @@
                         }, this);
                     this.$el.addClass('current-xmpp-contact');
                     var status_desc = {
-                        'dnd': 'This contact is busy',
-                        'online': 'This contact is online',
-                        'offline': 'This contact is offline',
-                        'away': 'This contact is away'
+                        'dnd': __('This contact is busy'),
+                        'online': __('This contact is online'),
+                        'offline': __('This contact is offline'),
+                        'unavailable': __('This contact is unavailable'),
+                        'xa': __('This contact is away for an extended period'),
+                        'away': __('This contact is away')
                         }[item.get('chat_status')||'offline'];
                     this.$el.html(this.template(
                         _.extend(item.toJSON(), {'status_desc': status_desc})
@@ -2649,7 +2651,7 @@
                     }
                     changed_presence = view.model.changed.chat_status;
                     if (changed_presence) {
-                        this.sortRoster(changed_presence)
+                        this.sortRoster(changed_presence);
                         sorted = true;
                     } 
                     if (item.get('is_last')) {
@@ -2688,6 +2690,7 @@
                 $my_contacts.siblings('dd.current-xmpp-contact.'+chat_status).tsort('a', {order:'asc'});
                 $my_contacts.after($my_contacts.siblings('dd.current-xmpp-contact.offline'));
                 $my_contacts.after($my_contacts.siblings('dd.current-xmpp-contact.unavailable'));
+                $my_contacts.after($my_contacts.siblings('dd.current-xmpp-contact.xa'));
                 $my_contacts.after($my_contacts.siblings('dd.current-xmpp-contact.away'));
                 $my_contacts.after($my_contacts.siblings('dd.current-xmpp-contact.dnd'));
                 $my_contacts.after($my_contacts.siblings('dd.current-xmpp-contact.online'));
@@ -3063,12 +3066,12 @@
             // Set up the roster
             this.roster = new this.RosterItems();
             this.roster.localStorage = new Backbone.LocalStorage(
-                hex_sha1('converse.rosteritems-'+this.bare_jid));
+                hex_sha1('converse.rosteritems-'+converse.bare_jid));
             this.connection.roster.registerCallback(
                 $.proxy(this.roster.rosterHandler, this.roster),
                 null, 'presence', null);
             this.rosterview = new this.RosterView({'model':this.roster});
-        }
+        };
 
         this.onConnected = function () {
             if (this.debug) {
