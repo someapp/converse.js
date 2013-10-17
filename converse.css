@@ -148,6 +148,18 @@ ul.participant-list li.moderator {
     border-left:1px solid #176679;
 }
 
+.chatbox.minimized {
+    margin-top: 275px;
+}
+
+.chatbox.minimized .chat-content {
+    display: None;
+}
+
+.chatbox.minimized form.sendXMPPMessage {
+    display: None;
+}
+
 .chat-content {
     position: relative;
     padding: 0.3em;

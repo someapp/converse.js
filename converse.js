@@ -639,6 +639,7 @@
 
             events: {
                 'click .close-chatbox-button': 'closeChat',
+                'click .minimize-chatbox-button': 'minimizeChat',
                 'keypress textarea.chat-textarea': 'keyPressed',
                 'click .toggle-otr': 'toggleOTRMenu',
                 'click .start-otr': 'startOTRFromToolbar',
@@ -649,6 +650,7 @@
             template: _.template(
                 '<div class="chat-head chat-head-chatbox">' +
                     '<a class="close-chatbox-button icon-close"></a>' +
+                    '<a class="minimize-chatbox-button icon-minus"></a>' +
                     '<a href="{{url}}" target="_blank" class="user">' +
                         '<div class="chat-title"> {{ fullname }} </div>' +
                     '</a>' +
@@ -1049,6 +1051,17 @@
                     this.model.destroy();
                 } else {
                     this.model.trigger('hide');
+                }
+            },
+
+            minimizeChat: function () {
+                var $content = this.$el.find('div.chat-content');
+                $content.toggle();
+                this.$el.find('form.sendXMPPMessage').toggle();
+                if (!$content.is(':visible')) {
+                    this.$el.addClass('minimized');
+                } else {
+                    this.$el.removeClass('minimized');
                 }
             },
 
