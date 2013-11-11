@@ -346,6 +346,12 @@ span.spinner.centered {
     margin: 0 0 0 -25%;
 }
 
+span.spinner.replace-textarea {
+    position: absolute;
+    margin-top: -42px;
+    margin-left: 84px;
+}
+
 span.spinner.hor_centered {
     left: 40%;
     position: absolute;

@@ -484,6 +484,7 @@
                     case otr.OTR.CONST.STATUS_AKE_SUCCESS:
                         if (this.otr.msgstate === otr.OTR.CONST.MSGSTATE_ENCRYPTED) {
                             this.save({'otr_status': UNVERIFIED});
+                            this.trigger('OTRInitiated');
                         }
                         break;
                     case otr.OTR.CONST.STATUS_END_OTR:
@@ -528,8 +529,9 @@
                 // If 'query_msg' is passed in, it means there is an alread incoming
                 // query message from our buddy. Otherwise, it is us who will
                 // send the query message to them.
+                this.trigger('initiateOTR');
                 this.save({'otr_status': UNENCRYPTED});
-                session = this.getSession();
+                var session = this.getSession();
                 this.otr = new otr.OTR({
                     fragment_size: 140,
                     send_interval: 200,
@@ -752,6 +754,8 @@
                 this.model.on('showReceivedOTRMessage', function (text) {
                     this.showOTRMessage(text, 'them');
                 }, this);
+                this.model.on('initiateOTR', this.disableTextArea, this);
+                this.model.on('OTRInitiated', this.enableTextArea, this);
                 this.updateVCard();
                 this.$el.appendTo(converse.chatboxesview.$el);
                 this.render().show().model.messages.fetch({add: true});
@@ -1033,6 +1037,15 @@
                 console.log("OTR ERROR:"+msg);
             },
 
+            enableTextArea: function () {
+                this.$el.find('span.replace-textarea.spinner').remove();
+                this.$el.find('textarea.chat-textarea').removeAttr('disable');
+            },
+
+            disableTextArea: function () {
+                this.$el.find('textarea.chat-textarea').attr('disable', true).after('<span class="replace-textarea spinner"/>');
+            },
+
             buddyStartsOTR: function (ev) {
                 this.showHelpMessages([__('This user has requested an encrypted session.')]);
                 this.model.initiateOTR();
@@ -1045,6 +1058,10 @@
             },
 
             endOTR: function (ev) {
+                if (typeof ev !== "undefined") {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                }
                 this.model.endOTR();
             },
 
