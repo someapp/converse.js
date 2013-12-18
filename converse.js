@@ -195,6 +195,10 @@
             }
         };
 
+        this.initialPresenceSent = function () {
+            return window.sessionStorage[hex_sha1(converse.bare_jid+'initial_presence_sent')];
+        };
+
         this.log = function (txt, level) {
             if (this.debug) {
                 if (level == 'error') {
@@ -2434,7 +2438,9 @@
                     'status': ''
                 }, attributes);
                 attrs.sorted = false;
-                attrs.chat_status = 'offline';
+                if (!converse.initialPresenceSent) {
+                    attrs.chat_status = 'offline';
+                }
                 this.set(attrs);
             }
         });
@@ -2716,8 +2722,7 @@
                     }
                 }, this);
 
-                var skey = hex_sha1(converse.bare_jid+'initial_presence_sent');
-                if (!window.sessionStorage[skey]) {
+                if (!converse.initialPresenceSent()) {
                     /* Once we've sent out our initial presence stanza, we'll
                      * start receiving presence stanzas from our contacts.
                      * We therefore only want to do this after our roster has
