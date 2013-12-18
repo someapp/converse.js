@@ -2717,7 +2717,7 @@
                 }, this);
 
                 var skey = hex_sha1(converse.bare_jid+'initial_presence_sent');
-                if (window.sessionStorage[skey]) {
+                if (!window.sessionStorage[skey]) {
                     /* Once we've sent out our initial presence stanza, we'll
                      * start receiving presence stanzas from our contacts.
                      * We therefore only want to do this after our roster has
