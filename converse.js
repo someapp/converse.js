@@ -2438,7 +2438,7 @@
                     'status': ''
                 }, attributes);
                 attrs.sorted = false;
-                if (!converse.initialPresenceSent) {
+                if ((!converse.initialPresenceSent) || (!attrs.chat_status)) {
                     attrs.chat_status = 'offline';
                 }
                 this.set(attrs);
@@ -2730,7 +2730,7 @@
                      * incoming presence stanzas).
                      */
                     converse.xmppstatus.sendPresence();
-                    window.sessionStorage[skey] = 1;
+                    window.sessionStorage[hex_sha1(converse.bare_jid+'initial_presence_sent')] = 1;
                 }
             },
 
@@ -2831,13 +2831,13 @@
                 } else if (presence_type === 'unavailable') {
                     if (this.removeResource(bare_jid, resource) === 0) {
                         if (item) {
-                            item.set({'chat_status': 'offline'});
+                            item.save({'chat_status': 'offline'});
                         }
                     }
                 } else if (item) {
                     // presence_type is undefined
                     this.addResource(bare_jid, resource);
-                    item.set({'chat_status': chat_status});
+                    item.save({'chat_status': chat_status});
                 }
                 return true;
             }
