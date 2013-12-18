@@ -177,7 +177,6 @@
         // Module-level variables
         // ----------------------
         this.callback = callback || function () {};
-        this.initial_presence_sent = 0;
         this.msg_counter = 0;
 
         // Module-level functions
@@ -468,7 +467,7 @@
                 }
             },
 
-            getSession: function () {
+            getOTRSession: function () {
                 // XXX: sessionStorage is not supported in IE < 8. Perhaps a
                 // user alert is required here...
                 var saved_key = window.sessionStorage[hex_sha1(this.id+'priv_key')];
@@ -557,7 +556,7 @@
                 // query message from our buddy. Otherwise, it is us who will
                 // send the query message to them.
                 this.save({'otr_status': UNENCRYPTED});
-                var session = this.getSession();
+                var session = this.getOTRSession();
                 this.otr = new OTR({
                     fragment_size: 140,
                     send_interval: 200,
@@ -2717,15 +2716,16 @@
                     }
                 }, this);
 
-                if (!converse.initial_presence_sent) {
+                var skey = hex_sha1(converse.bare_jid+'initial_presence_sent');
+                if (window.sessionStorage[skey]) {
                     /* Once we've sent out our initial presence stanza, we'll
                      * start receiving presence stanzas from our contacts.
                      * We therefore only want to do this after our roster has
                      * been set up (otherwise we can't meaningfully process
                      * incoming presence stanzas).
                      */
-                    converse.initial_presence_sent = 1;
                     converse.xmppstatus.sendPresence();
+                    window.sessionStorage[skey] = 1;
                 }
             },
 
