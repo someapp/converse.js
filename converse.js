@@ -132,6 +132,7 @@
         this.auto_subscribe = false;
         this.bosh_service_url = undefined; // The BOSH connection manager URL.
         this.debug = false;
+        this.wait = 5;
         this.hide_muc_server = false;
         this.i18n = locales.en;
         this.prebind = false;
@@ -156,6 +157,7 @@
             'bosh_service_url',
             'connection',
             'debug',
+            'wait',
             'fullname',
             'hide_muc_server',
             'i18n',
@@ -317,10 +319,12 @@
                 $button = $form.find('input[type=submit]');
                 if ($button) { $button.show().siblings('span').remove(); }
                 converse.giveFeedback(__('Disconnected'), 'error');
+                converse.log('Connected: jid' + converse.connection.jid + ' wait: '+ converse.wait);
                 converse.connection.connect(
                     converse.connection.jid,
                     converse.connection.pass,
-                    converse.onConnect
+                    converse.onConnect,
+                    converse.wait
                 );
             } else if (status === Strophe.Status.Error) {
                 $form = $('#converse-login');
@@ -652,9 +656,27 @@
                     composing = $message.find('composing'),
                     delayed = $message.find('delay').length > 0,
                     fullname = this.get('fullname'),
+                    now = (new Date()).getTime(),
+                    threadId = $message.children('thread') || undefined,
+                    messageId = $message.attr('id') || undefined,
                     stamp, time, sender;
                 fullname = (_.isEmpty(fullname)? from: fullname).split(' ')[0];
-
+                console.log('DEBUG: BEFORE CREATE conversation threadId: ' + String(threadId) + ' messageId: ' + messageId );
+                if (threadId == undefined|| !threadId) {
+                    to = Strophe.getBareJidFromJid($message.attr('to')),
+                    threadId = MD5.hexdigest(to.toLowerCase());
+                };
+                if (messageId == undefined || !messageId) {
+                    messageId = (new Date()).getTime();
+                    //messageId = converse.connection.getUniqueId();
+                } else {
+                    var messageId0 = parseInt(messageId);
+                    //var counter = converse.connection.getUniqueId();
+                    var counter = (new Date()).getTime();
+                    messageId = Math.max(messageId0, counter);
+                };
+                console.log('DEBUG: AFTER CREATE conversation threadId: ' + String(threadId) + ' messageId: ' + messageId );
+                fullname = (_.isEmpty(fullname)? from: fullname).split(' ')[0]
                 if (!body) {
                     if (composing.length) {
                         this.messages.add({
@@ -682,6 +704,8 @@
                         sender: sender,
                         delayed: delayed,
                         time: time,
+                        threadId: threadId,
+                        messageId: messageId,
                         message: body
                     });
                 }
@@ -690,6 +714,9 @@
             messageReceived: function (message) {
                 var $body = $(message).children('body');
                 var text = ($body.length > 0 ? $body.text() : undefined);
+                var threadId = $(message).children('thread') || undefined;
+                var messageId = $(message).attr('id') || undefined;
+                console.log('DEBUG: MESSAGE RECEIVE conversation threadId: ' + String(threadId) + ' messageId: ' + messageId );
                 if ((!text) || (!converse.allow_otr)) {
                     return this.createMessage(message);
                 }
@@ -980,7 +1007,7 @@
                     (next_date.getMonth() != prev_date.getMonth()));
             },
 
-            sendMessageStanza: function (text) {
+            sendMessageStanza: function (text, threadId) {
                 /*
                  * Sends the actual XML stanza to the XMPP server.
                  */
@@ -989,8 +1016,14 @@
                 // we send to the bare jid.
                 var timestamp = (new Date()).getTime();
                 var bare_jid = this.model.get('jid');
+                if( threadId == undefined || !threadId ) { 
+                    // threadId = converse.connection.getUniqueId();
+ 
+                    threadId = MD5.hexdigest(bare_jid.toLowerCase());                          
+                };
                 var message = $msg({from: converse.connection.jid, to: bare_jid, type: 'chat', id: timestamp})
                     .c('body').t(text).up()
+                    .c('thread').t(threadId).up()
                     .c('active', {'xmlns': 'http://jabber.org/protocol/chatstates'});
                 // Forward the message, so that other connected resources are also aware of it.
                 // TODO: Forward the message only to other connected resources (inside the browser)
@@ -1003,7 +1036,7 @@
                 converse.connection.send(forwarded);
             },
 
-            sendMessage: function (text) {
+            sendMessage: function (text, threadId) {
                 var match = text.replace(/^\s*/, "").match(/^\/(.*)\s*$/), msgs;
                 if (match) {
                     if (match[1] === "clear") {
@@ -1039,7 +1072,7 @@
                         time: converse.toISOString(new Date()),
                         message: text
                     });
-                    this.sendMessageStanza(text);
+                    this.sendMessageStanza(text, threadId);
                 }
             },
 
@@ -1054,7 +1087,8 @@
                         if (this.model.get('chatroom')) {
                             this.sendChatRoomMessage(message);
                         } else {
-                            this.sendMessage(message);
+                            var threadId = MD5.hexdigest(this.model.get('jid').toLowerCase());
+                            this.sendMessage(message, threadId);
                         }
                         converse.emit('onMessageSend', message);
                     }
@@ -3337,7 +3371,8 @@
                     $form.find('input[type=submit]').hide().after('<span class="spinner login-submit"/>');
                 }
                 converse.connection = new Strophe.Connection(converse.bosh_service_url);
-                converse.connection.connect(jid, password, converse.onConnect);
+                converse.log('Connect: jid' + jid + ' password: ' + password + ' wait: '+ converse.wait); // + ' sid: ' + converse.connection.sid);
+                converse.connection.connect(jid, password, converse.onConnect, converse.wait);
             },
 
             showConnectButton: function () {
