@@ -125,18 +125,18 @@
         // Default configuration values
         // ----------------------------
         this.allow_contact_requests = true;
-        this.allow_muc = true;
+        this.allow_muc = false;
         this.allow_otr = true;
         this.animate = true;
         this.auto_list_rooms = false;
-        this.auto_subscribe = false;
-        this.bosh_service_url = undefined; // The BOSH connection manager URL.
+        this.auto_subscribe = true;
+        this.bosh_service_url = 'http://192.168.3.200:5280/http-bind'; // The BOSH connection manager URL.
         this.debug = false;
-        this.wait = 5;
-        this.hide_muc_server = false;
+        this.wait = 10;
+        this.hide_muc_server = true;
         this.i18n = locales.en;
         this.prebind = false;
-        this.show_controlbox_by_default = false;
+        this.show_controlbox_by_default = true;
         this.show_only_online_users = false;
         this.show_emoticons = true;
         this.show_toolbar = true;
@@ -663,8 +663,8 @@
                 fullname = (_.isEmpty(fullname)? from: fullname).split(' ')[0];
                 console.log('DEBUG: BEFORE CREATE conversation threadId: ' + String(threadId) + ' messageId: ' + messageId );
                 if (threadId == undefined|| !threadId) {
-                    to = Strophe.getBareJidFromJid($message.attr('to')),
-                    threadId = MD5.hexdigest(to.toLowerCase());
+                    fromto = from + Strophe.getBareJidFromJid($message.attr('to')),
+                    threadId = MD5.hexdigest(fromto.toLowerCase());
                 };
                 if (messageId == undefined || !messageId) {
                     messageId = (new Date()).getTime();
